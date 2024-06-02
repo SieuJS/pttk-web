@@ -3,7 +3,7 @@ CREATE TABLE "JobPosting" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "Salary" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "salary" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "location" TEXT NOT NULL,
     "author" TEXT NOT NULL,
     "img" TEXT,

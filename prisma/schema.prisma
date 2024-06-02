@@ -20,5 +20,6 @@ model JobPosting {
   img String ? 
   employmentType String?
   createdAt DateTime @default (now())
+   @@map("TinDangTuyen")
 }
 
