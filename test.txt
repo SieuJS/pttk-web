@@ -1,1 +1,71 @@
-alo
+function createBusinessPerformancePresentation() {
+  // Create a new presentation
+  var presentation = SlidesApp.create("Business Performance Analysis & Insights");
+
+  // Slide 1: Title Slide
+  var slide1 = presentation.getSlides()[0];
+  slide1.insertTextBox('Business Performance Analysis & Insights', 100, 50, 600, 50).getText().getTextStyle().setFontSize(42).setBold(true);
+  slide1.insertTextBox('A Data-Driven Approach to Enhance Strategy and Growth', 100, 150, 600, 50).getText().getTextStyle().setFontSize(20);
+  slide1.insertTextBox('Your Name', 100, 250, 600, 50).getText().getTextStyle().setFontSize(18);
+  slide1.insertTextBox('Date', 100, 300, 600, 50).getText().getTextStyle().setFontSize(18);
+
+  // Slide 2: Introduction
+  var slide2 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide2.getShapes()[0].getText().setText('Introduction').getTextStyle().setFontSize(32).setBold(true);
+  slide2.getShapes()[1].getText().setText('Brief overview of the presentation\nObjectives: Analyze business performance, customer behavior, and operational challenges').getTextStyle().setFontSize(18);
+
+  // Slide 3: Customer Purchase Behavior
+  var slide3 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide3.getShapes()[0].getText().setText('Customer Purchase Behavior').getTextStyle().setFontSize(32).setBold(true);
+  slide3.getShapes()[1].getText().setText('Explanation of customer purchase patterns across different product categories\n\nNumber of Customers by Categories Purchased (Bar Chart)').getTextStyle().setFontSize(18);
+
+  // Slide 4: Sales Performance by Region
+  var slide4 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide4.getShapes()[0].getText().setText('Sales Performance by Region').getTextStyle().setFontSize(32).setBold(true);
+  slide4.getShapes()[1].getText().setText('Analysis of revenue distribution across states\n\nRevenue by State (Bar Chart and Map)').getTextStyle().setFontSize(18);
+
+  // Slide 5: Product Performance
+  var slide5 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide5.getShapes()[0].getText().setText('Top Selling Products').getTextStyle().setFontSize(32).setBold(true);
+  slide5.getShapes()[1].getText().setText('Insight into the highest-selling product categories\n\nQuantity of Products Sold by Category (Horizontal Bar Chart)').getTextStyle().setFontSize(18);
+
+  // Slide 6: Order Cancellations
+  var slide6 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide6.getShapes()[0].getText().setText('Order Cancellations').getTextStyle().setFontSize(32).setBold(true);
+  slide6.getShapes()[1].getText().setText('Overview of the main reasons for order cancellations\n\nMost Common Reasons for Cancellations (Bar Chart)').getTextStyle().setFontSize(18);
+
+  // Slide 7: Sales Representative Performance
+  var slide7 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide7.getShapes()[0].getText().setText('Sales Representative Performance').getTextStyle().setFontSize(32).setBold(true);
+  slide7.getShapes()[1].getText().setText('Monthly profit trends for each sales representative\n\nMonthly Profit Difference by Sales Representative (Bar Chart)').getTextStyle().setFontSize(18);
+
+  // Slide 8: Customer Returns
+  var slide8 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide8.getShapes()[0].getText().setText('Customer Returns').getTextStyle().setFontSize(32).setBold(true);
+  slide8.getShapes()[1].getText().setText('Analysis of return rates by product category\n\nReturn Rates by Category (Bar Chart)').getTextStyle().setFontSize(18);
+
+  // Slide 9: Summary
+  var slide9 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide9.getShapes()[0].getText().setText('Summary of Insights').getTextStyle().setFontSize(32).setBold(true);
+  slide9.getShapes()[1].getText().setText('Key takeaways from the data analysis\nHighlights of customer behavior, sales performance, and operational challenges').getTextStyle().setFontSize(18);
+
+  // Slide 10: Recommendations
+  var slide10 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide10.getShapes()[0].getText().setText('Recommendations').getTextStyle().setFontSize(32).setBold(true);
+  slide10.getShapes()[1].getText().setText('Strategies to encourage cross-category purchasing\nFocus on high-performing regions\nAddress product quality issues\nSupport underperforming sales representatives\nReduce order cancellations').getTextStyle().setFontSize(18);
+
+  // Slide 11: Conclusion
+  var slide11 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide11.getShapes()[0].getText().setText('Conclusion').getTextStyle().setFontSize(32).setBold(true);
+  slide11.getShapes()[1].getText().setText('Recap of the analysis and recommendations\nNext steps for implementation').getTextStyle().setFontSize(18);
+
+  // Slide 12: Q&A
+  var slide12 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide12.getShapes()[0].getText().setText('Questions & Answers').getTextStyle().setFontSize(32).setBold(true);
+  slide12.getShapes()[1].getText().setText('Open the floor for questions and discussions').getTextStyle().setFontSize(18);
+
+  // Slide 13: Thank You
+  var slide13 = presentation.appendSlide(SlidesApp.PredefinedLayout.TITLE_AND_BODY);
+  slide13.getShapes()[0].getText().setText('Thank You').getTextStyle().setFontSize(32).setBold(true);
+  slide13.getShapes()[1].getText().setText('Expression of gratitude for the audience\'s time and attention\nContact information for follow-up').getTextStyle().setFontSize(18);
+}
