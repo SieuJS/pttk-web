@@ -6,11 +6,13 @@ import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { MdAdsClick } from "react-icons/md";
 import Button from "../ui/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useAuthContext } from "@/components/shared/AppProvider";
 
 const Navbar = () => {
   const [openMobileMenu, setOpenMobileMenu] =
     useState(false);
+    const auth = useAuthContext();
 
   const handleOpenMobileMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
@@ -37,9 +39,15 @@ const Navbar = () => {
         </ul>
 
         <div className="max-md:flex justify-center items-center gap-10">
+          
           <Link href={"/create"}>
             <Button>Post a Job</Button>
           </Link>
+          { !auth.isLoggedIn &&
+          <Link href={"/signin"}>
+            <Button>Đăng nhập</Button>
+          </Link>
+          }
 
           <div
             className="md:hidden text-3xl cursor-pointer text-black"

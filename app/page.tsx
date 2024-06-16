@@ -9,7 +9,7 @@ const Home = async () => {
   const jobs = await prisma.jobPosting.findMany({});
   return (
     <>
-      <Hero jobs={jobs} />
+      <Hero jobs = {jobs}/>
       <Jobs />
       <Sponsors />
       <About />

@@ -9,7 +9,7 @@ interface DynamicProps {
 
 const getData = async (id: string) => {
   const res = await fetch(
-    `http://localhost:3000/api/post/${id}`,
+    `${process.env.SERVER_API}/post/${id}`,
     {
       cache: "no-store",
     }
@@ -98,10 +98,6 @@ const page = async ({ params }: DynamicProps) => {
               Job Description:
             </h5>
             <p className="mt-4 text-slate-400">
-              {job.description}
-              {job.description}
-              {job.description}
-              {job.description}
               {job.description}
               {job.description}
               {job.description}

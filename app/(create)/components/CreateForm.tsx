@@ -9,7 +9,12 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useState, useEffect } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
+
+import LoadingModal from "@/components/modal/LoadingModal";
+
 import clsx from "clsx";
+
+
 
 const CreateForm = () => {
   const [file, setFile] = useState<File>();
@@ -32,6 +37,11 @@ const CreateForm = () => {
     },
   });
 
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => isLoading ? setOpen(true) : setOpen(false);
+
   const uploadImageHandler = async () => {
     if (file) {
       const res = await edgestore.publicFiles.upload({
@@ -48,12 +58,25 @@ const CreateForm = () => {
   }, [file]);
 
   const onSubmit = handleSubmit(async (data) => {
+    setOpen(true);
+    setIsLoading(true);
     await createJob(data);
+    setIsLoading (false);
     reset();
   });
 
   return (
     <>
+    <div>
+      <LoadingModal
+        open = {open}
+        isLoading = {isLoading}
+        messOnLoading={'We \'re applying your information, please wait a sec ...'}
+        messOnDone= {'Your job has been uploaded!!!'}
+        onClose={handleClose}
+      
+      />
+    </div>
       <form onSubmit={onSubmit} className="mt-10">
         <div className="flex flex-col sm:gap-10 gap-5">
           <div className="grid sm:grid-cols-2 gap-5">

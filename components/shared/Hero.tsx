@@ -5,7 +5,7 @@ interface HeroProps {
   jobs: jobType[];
 }
 
-const Hero = ({ jobs }: HeroProps) => {
+const Hero = ( {jobs} : HeroProps) => {
   return (
     <div
       id="home"

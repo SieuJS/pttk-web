@@ -1,6 +1,6 @@
 export interface jobType {
     id: string;
-    name: string;
+    name: string ;
     img: string | null
     author: string;
     salary: number | null
