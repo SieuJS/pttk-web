@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form"
 import Input from "@/components/ui/Input";
 
 import LoadingModal from "@/components/modal/LoadingModal";
+import Centercard from "@/app/(auth)/components/ui/CenterCard"
 import { useRouter } from 'next/navigation'
 import {
     FormData, setCookie
@@ -78,8 +79,7 @@ const LoginForm = () => {
         isError = {!!error} 
         messOnError={error}
     />
-    <div className="mt-10 flex items-center justify-center w-full dark:bg-gray-950">
-        <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md">
+        <Centercard>
             <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">Xin chào !!!</h1>
             <form onSubmit={onSubmit}>
                 <div className="mb-4">
@@ -111,12 +111,10 @@ const LoginForm = () => {
                         <input type="checkbox" id="remember" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none" checked/>
                         <label htmlFor="remember" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">Ghi nhớ</label>
                     </div>
-
                 </div>
                 <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Đăng nhập</button>
             </form>
-        </div>
-    </div>
+    </Centercard>
     </>
     )
 }
