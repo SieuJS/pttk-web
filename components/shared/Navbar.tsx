@@ -48,6 +48,10 @@ const Navbar = () => {
             <Button>Đăng nhập</Button>
           </Link>
           }
+          {
+            auth.isLoggedIn && 
+            <Button onClick={() => {auth.logout()}}>Đăng xuất</Button>
+          }
 
           <div
             className="md:hidden text-3xl cursor-pointer text-black"

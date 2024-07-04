@@ -22,19 +22,20 @@ const SearchForm = ({ jobs }: SearchFormProps) => {
 
   useEffect(() => {
     function filterAndSetJobs() {
-      const filteredJobs = jobs.filter((item) => {
+      const filteredJobs = jobs?.filter((item) => {
         const titleCondition =
           state.title === "" ||
-          item.name
-            .toLowerCase()
-            .includes(state.title.toLowerCase());
+          item.name && 
+          item.name.toLowerCase().includes(state.title.toLowerCase()) ;
         const locationCondition =
           state.location === "" ||
+          item.location &&
           item.location
             .toLowerCase()
             .includes(state.location.toLowerCase());
         const companyCondition =
           state.author === "" ||
+          item.author &&
           item.author
             .toLowerCase()
             .includes(state.author.toLowerCase());

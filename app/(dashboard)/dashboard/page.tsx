@@ -1,3 +1,4 @@
+import { cookies } from "next/headers"
 
 import {
   Card,
@@ -16,25 +17,14 @@ import {
 } from "@/components/ui/table";
 
 import { inforList } from "../constants/dashboard";
-import { InforProps } from "../constants/dashboard";
+import InforSheet from "../components/dashboard/InforSheet";
 
-interface CompanyInfo {
-  mst: string;
-  tencongty: string;
-  nguoidaidien: string;
-  diachi: string;
-  email: string;
-}
 
-const fakeCompany: CompanyInfo = {
-  mst: "123",
-  tencongty: "FPT",
-  nguoidaidien: "Jason",
-  diachi: "HCM",
-  email: "test@test.com"
-};
+let cookieStore = cookies () ; 
+const sessionToken = cookieStore.get('sessionToken')  ;
 
 const DashBoard = () => {
+
   return (
       <>
   <Card>
@@ -45,18 +35,8 @@ const DashBoard = () => {
   <CardContent>
       <Table>
       <TableBody>
-          {inforList.map(i => (
-            <TableRow>
-              <TableCell>
-                <div className="font-medium">{i.label}</div>
-              </TableCell>
-              <TableCell>
-                <div className="font-medium">{(fakeCompany as any)[i.value]}</div>
-              </TableCell>
-            </TableRow>
-          ))}
+        <InforSheet token= {sessionToken?.value} />
 
-          
       </TableBody>
       </Table>
   </CardContent>

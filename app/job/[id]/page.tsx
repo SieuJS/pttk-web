@@ -9,7 +9,7 @@ interface DynamicProps {
 
 const getData = async (id: string) => {
   const res = await fetch(
-    `${process.env.SERVER_API}/post/${id}`,
+    `${process.env.NEXT_PUBLIC_SERVER_API}/post/${id}`,
     {
       cache: "no-store",
     }
@@ -18,7 +18,6 @@ const getData = async (id: string) => {
   if (!res.ok) {
     throw new Error("Failed");
   }
-
   return res.json();
 };
 const page = async ({ params }: DynamicProps) => {

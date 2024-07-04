@@ -41,16 +41,15 @@ const LoginForm = () => {
         let data;
         setOpen(true)
         try {       
-            data = await sendRequest(config.serverRuntimeConfig.backendAPI+'/emp/signin', 'POST', {
+            data = await sendRequest(config.serverRuntimeConfig.backendAPI+'/auth/signin', 'POST', {
                 'Content-Type': 'application/json'
             }, JSON.stringify(formData));
             let userData : UserData = {
-                userId : data.account.manv,
+                userId : data.account.username,
                 token : data.accessToken,
-                type : data.account.loainv,
+                type : data.account.type,
                 expiredDateToken : null
             }
-            console.log('going auth', userData)
             await auth.login(userData);
 
             router.push('/')

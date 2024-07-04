@@ -1,11 +1,11 @@
 export interface jobType {
     id: string;
-    name: string ;
+    name: string | null ;
     img: string | null
-    author: string;
+    author: string | null;
     salary: number | null
-    location: string;
-    description: string;
-    employmentType: string | null
-    createdAt: Date
+    location: string | null;
+    description: string | null;
+    employmentType: string | null;
+    createdAt: Date | null;
   }

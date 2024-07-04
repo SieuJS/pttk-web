@@ -8,7 +8,7 @@ export interface InforProps {
 export const inforList : InforProps[] = [
     {
         label : "Mã số thuế",
-        value : "mst"
+        value : "masothue"
     }, 
     {
         label : "Tên công ty",
@@ -26,4 +26,8 @@ export const inforList : InforProps[] = [
         label : "Email",
         value : "email"
     },
+    {
+        label : "Tình trạng" ,
+        value : "tinhtrang"
+    }
 ]  

@@ -23,10 +23,10 @@ const style = {
 interface LoadingProps {
     open: boolean;
     isLoading?: boolean;
-    isError: boolean;
-    messOnError: string | null;
+    isError?: boolean;
+    messOnError?: string | null;
     messOnLoading?: string;
-    messOnDone: string | null;
+    messOnDone?: string | null;
 
     onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
