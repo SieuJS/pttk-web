@@ -4,6 +4,8 @@ import { useRef, useState, useEffect, useCallback, MutableRefObject } from 'reac
 
 import { loginAction, logoutAction } from '../actions/auth-action';
 
+import { useRouter } from 'next/navigation';
+
 export interface UserData {
     userId: string | null;
     token: string | null;
@@ -16,7 +18,7 @@ export default function AuthHook() {
     const [userId, setUserId] = useState<string | null>(null);
     const [type, setType] = useState<string | null>(null);
     const [deadlineToken, setDeadlineToken] = useState<Date | undefined>();
-
+    const router = useRouter(); 
     const tokenTimeRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -24,7 +26,6 @@ export default function AuthHook() {
         if (userDataString) {
             const userData: UserData = JSON.parse(userDataString);
             login(userData);
-            loginAction(userData);
         }
     }, []);
 
@@ -56,6 +57,7 @@ export default function AuthHook() {
             clearTimeout(tokenTimeRef.current);
         }
         await logoutAction();
+        router.refresh() ;
     }, []);
 
     useEffect(() => {

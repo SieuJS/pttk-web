@@ -1,8 +1,8 @@
 'use client'
 
 import { useHttpClient } from "@/shared/hooks/http-hook"
-import { inforList } from "../../constants/dashboard"
-import config from "@/config";
+import { inforList, candidateInforList } from "../constants/dashboard"
+
 import {
 
     TableCell,
@@ -10,29 +10,41 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import LoadingModal from "../modal/LoadingModal";
-
+import LoadingModal from "./modal/LoadingModal";
+import { BackEndURL } from "@/config";
+import AuthHook from "@/shared/hooks/auth-hook";
 export interface InforSheetProps {
-    token: string | undefined
+    token: string | undefined,
+    context? : string ,
+    email ? : string ,
 }
-
 export default function InforSheet ( {token} : InforSheetProps) { 
-
+    const auth = AuthHook();
     const {sendRequest, isLoading, clearError, error} = useHttpClient()
     const [info, setInfor] = useState<any>(); 
-    const [openLoading, setOpenLoading] = useState(false)
+    const [openLoading, setOpenLoading] = useState(false);
     useEffect(() => {
-        if(!token) return ;
-        let data  ;
+        if(!auth.token) return ;
         setOpenLoading(true)
         const fetchInfoSheet = async () => {
             try{
+            let data;
+            if(!auth.token) return;
+            if (auth.type?.toLowerCase() ==='doanh nghiệp') {
+
+            
             data = await sendRequest(
-                config.serverRuntimeConfig.backendAPI + '/company/infor',
+                BackEndURL + '/company/infor',
                 'GET' , {
                     'Authorization' : `Bearer ${token}` 
                 }
             )
+            }
+            else {
+                data = await sendRequest (
+                    BackEndURL + '/candidate/get/'+auth.userId
+                )
+            }
 
             setInfor(data.data) ; 
 
@@ -43,7 +55,7 @@ export default function InforSheet ( {token} : InforSheetProps) {
             setOpenLoading(false)
         }
         fetchInfoSheet() ; 
-    }, [token])
+    }, [auth.token, token])
 
     return (
         <>
@@ -57,8 +69,20 @@ export default function InforSheet ( {token} : InforSheetProps) {
             isError = {!!error}
         /> }
         {
-        info &&
+        info && auth.type?.toLowerCase() ==='doanh nghiệp' &&
         inforList.map(i => (
+            <TableRow>
+              <TableCell>
+                <div className="font-medium">{i.label}</div>
+              </TableCell>
+              <TableCell>
+                <div className="font-medium">{(info as any)[i.value]}</div>
+              </TableCell>
+            </TableRow>
+          ))}
+        {
+        info && auth.type?.toLowerCase() ==='ứng viên' &&
+        candidateInforList.map(i => (
             <TableRow>
               <TableCell>
                 <div className="font-medium">{i.label}</div>

@@ -5,9 +5,11 @@ import { navLinks } from "@/constants";
 import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { MdAdsClick } from "react-icons/md";
-import Button from "../ui/Button";
+import { Button } from "@/app/(dashboard)/components/ui/button";
 import { useContext, useState } from "react";
 import { useAuthContext } from "@/components/shared/AppProvider";
+import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger,DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuContent } from "@/app/(dashboard)/components/ui/dropdown-menu";
+import { CircleUser } from "lucide-react";
 
 const Navbar = () => {
   const [openMobileMenu, setOpenMobileMenu] =
@@ -17,6 +19,8 @@ const Navbar = () => {
   const handleOpenMobileMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
   };
+
+  console.log(auth)
   return (
     <nav className="py-5 bg-transparent relative top-0 z-10 w-full">
       <div className="max-w-[1450px] w-[90%] mx-auto flex justify-between items-center">
@@ -39,18 +43,29 @@ const Navbar = () => {
         </ul>
 
         <div className="max-md:flex justify-center items-center gap-10">
-          
-          <Link href={"/create"}>
-            <Button>Post a Job</Button>
-          </Link>
-          { !auth.isLoggedIn &&
+          { !auth.token &&
           <Link href={"/signin"}>
             <Button>Đăng nhập</Button>
           </Link>
           }
           {
-            auth.isLoggedIn && 
-            <Button onClick={() => {auth.logout()}}>Đăng xuất</Button>
+            auth.token && 
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="secondary" size="icon" className="rounded-full">
+                        <CircleUser className="h-5 w-5" />
+                        <span className="sr-only">Toggle user menu</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem><Link href={'/dashboard'}>Infor Page</Link></DropdownMenuItem>
+                    <DropdownMenuItem>Setting</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={auth.logout}>Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
           }
 
           <div

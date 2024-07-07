@@ -1,13 +1,2 @@
- export default  {
-  serverRuntimeConfig: {
-    // Will only be available on the server side
-    mySecret: 'secret',
-    secondSecret: process.env.SECOND_SECRET, // Pass through env variables
-    backendAPI : process.env.NEXT_PUBLIC_API
-  },
-  publicRuntimeConfig: {
-    // Will be available on both server and client
-    staticFolder: '/static',
-    
-  },
-}
+export const BackEndURL = process.env.NEXT_PUBLIC_BACKEND_API;
+export const ServerURL = process.env.NEXT_PUBLIC_SERVER_API;

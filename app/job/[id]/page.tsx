@@ -1,3 +1,4 @@
+import HiringDetail from "@/components/job/HiringDetail";
 import Button from "@/components/ui/Button";
 import { formatPostedDate } from "@/utils/formatDate";
 
@@ -96,15 +97,7 @@ const page = async ({ params }: DynamicProps) => {
             <h5 className="text-lg font-semibold">
               Job Description:
             </h5>
-            <p className="mt-4 text-slate-400">
-              {job.description}
-              {job.description}
-              {job.description}
-            </p>
-
-            <div className="mt-4">
-              <Button>Apply Now</Button>
-            </div>
+            <HiringDetail maphieudangtuyen= {id} />
           </div>
         </div>
       </div>

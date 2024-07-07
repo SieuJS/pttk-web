@@ -17,11 +17,11 @@ import {
 } from "@/components/ui/table";
 
 import { inforList } from "../constants/dashboard";
-import InforSheet from "../components/dashboard/InforSheet";
+import InforSheet from "../components/InforSheet";
 
 
 let cookieStore = cookies () ; 
-const sessionToken = cookieStore.get('sessionToken')  ;
+const sessionToken = cookieStore.get('clientToken')  ;
 
 const DashBoard = () => {
 
@@ -29,7 +29,7 @@ const DashBoard = () => {
       <>
   <Card>
       <CardHeader className="px-7">
-          <CardTitle>Thông tin công ty thành viên</CardTitle>
+          <CardTitle>Thông tin</CardTitle>
       </CardHeader>
   </Card>
   <CardContent>

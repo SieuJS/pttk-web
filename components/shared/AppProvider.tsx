@@ -7,7 +7,7 @@ import AuthHook, {UserData} from "@/shared/hooks/auth-hook"
 
 
 export const useAuthContext = () => {
-    const auth = useContext(AuthContext);
+    const auth = AuthHook();
     return auth ; 
 }
 
@@ -22,7 +22,8 @@ const AuthProvider = ({
                 login , 
                 logout, 
                 userId : userId || '',
-                type : type || ''
+                type : type || '',
+                token : token || ''
             }}
         >
             {children}

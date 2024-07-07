@@ -8,7 +8,7 @@ import { useState } from "react"
 import { useHttpClient } from "@/shared/hooks/http-hook"
 import { AuthResponse } from "@/shared/schema/AuthReponse"
 import { UserData } from "@/shared/hooks/auth-hook"
-import config from "@/config"
+import { BackEndURL } from "@/config";
 
 import { useAuthContext } from "@/components/shared/AppProvider"
 import CenterCard from "./ui/CenterCard"
@@ -22,7 +22,6 @@ type FormData = {
     email: string,
     diachi: string,
     tencongty: string,
-
 }
 
 const RegisterForm = () => {
@@ -54,7 +53,7 @@ const RegisterForm = () => {
         console.log(formData)
         try {
             data = await sendRequest(
-                `${config.serverRuntimeConfig.backendAPI}/regis-sheet/create`, 'POST', {
+                `${BackEndURL}/regis-sheet/create`, 'POST', {
                 'Content-Type': 'application/json'
             }, JSON.stringify(formData));
 
@@ -78,15 +77,15 @@ const RegisterForm = () => {
 
     return (
         <>
-            <LoadingModal
-                isLoading={isLoading}
-                open={openLoader}
-                onClose={() => { clearError(); setOpenLoader(false) }}
-                messOnDone={"Đăng ký thành công"}
-                messOnLoading="Đang đăng ký"
-                messOnError={error}
-                isError={!!error}
-            />
+        <LoadingModal
+            isLoading={isLoading}
+            open={openLoader}
+            onClose={() => { clearError(); setOpenLoader(false) }}
+            messOnDone={"Đăng ký thành công"}
+            messOnLoading="Đang đăng ký"
+            messOnError={error}
+            isError={!!error}
+        />
             <CenterCard>
                 <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">Đăng ký Công ty Thành viên</h1>
                 <form onSubmit={onSubmit}>

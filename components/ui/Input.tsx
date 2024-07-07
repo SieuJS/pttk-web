@@ -60,7 +60,6 @@ const Input: React.FC<InputProps> = ({
       focus:outline-purple-600
       sm:text-sm
       sm:leading-6
-     
       `,
         errors && errors[id] && "ring-rose-700",
         disabled && "opacity-50 cursor-default"

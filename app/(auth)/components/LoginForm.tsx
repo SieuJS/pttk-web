@@ -12,10 +12,10 @@ import { useState, useContext } from "react";
 import { useHttpClient } from "@/shared/hooks/http-hook";
 import { AuthResponse } from "@/shared/schema/AuthReponse";
 import { UserData } from "@/shared/hooks/auth-hook";
-import config from "@/config"
-
+import { BackEndURL } from "@/config"
+import Link from "next/link";
 import { useAuthContext } from "@/components/shared/AppProvider";
-
+import { Button } from "@/app/(dashboard)/components/ui/button";
 const LoginForm = () => {
     const router = useRouter();
     const {
@@ -41,7 +41,7 @@ const LoginForm = () => {
         let data;
         setOpen(true)
         try {       
-            data = await sendRequest(config.serverRuntimeConfig.backendAPI+'/auth/signin', 'POST', {
+            data = await sendRequest(BackEndURL+'/auth/signin', 'POST', {
                 'Content-Type': 'application/json'
             }, JSON.stringify(formData));
             let userData : UserData = {
@@ -84,7 +84,7 @@ const LoginForm = () => {
                 <div className="mb-4">
                     <Input 
                     type="text" 
-                    label="Mã nhân viên"
+                    label="Tên tài khoản"
                     id="username" 
                     errors = {errors}
                     disabled = {isSubmitting}
@@ -105,13 +105,21 @@ const LoginForm = () => {
                         }}
                         />
                 </div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3 border-b-2">
                     <div className="flex items-center">
                         <input type="checkbox" id="remember" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none" checked/>
                         <label htmlFor="remember" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">Ghi nhớ</label>
                     </div>
                 </div>
-                <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Đăng nhập</button>
+
+                <div className="text-400 grid grid-cols-2 gap-3 py-3 border-b-2">
+                    <h3 className="col-span-2 font-bold">Đăng ký tài khoản</h3>
+                    <Button variant={'outline'} ><Link href={'/register'}>Doanh nghiệp</Link></Button>
+                    <Button variant={'outline'}><Link href={'/signup'}>Ứng viên</Link></Button>
+
+                    <Button className="col-span-2">Đăng nhập</Button>
+
+                </div>
             </form>
     </Centercard>
     </>

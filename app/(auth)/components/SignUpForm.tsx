@@ -7,14 +7,13 @@ import { useState } from "react"
 import { useHttpClient } from "@/shared/hooks/http-hook"
 import { AuthResponse } from "@/shared/schema/AuthReponse"
 import { UserData } from "@/shared/hooks/auth-hook"
-import config from "@/config"
-
-import { useAuthContext } from "@/components/shared/AppProvider"
+import AuthHook from "@/shared/hooks/auth-hook"
+import { BackEndURL } from "@/config"
 import CenterCard from "./ui/CenterCard"
 import Input from "@/components/ui/Input"
-import { MdCollectionsBookmark } from "react-icons/md"
+import { Button } from "@/app/(dashboard)/components/ui/button"
 type FormData = {
-    password : string ,
+    matkhau : string ,
     cccd : string , 
     hoten : string ,
     sdt : string , 
@@ -24,7 +23,11 @@ type FormData = {
 }
 
 const SignUp = () => {
+    const auth = AuthHook();
     const router = useRouter();
+    const [openLoader, setOpenLoader] = useState(false);
+
+    const {sendRequest,isLoading, error, clearError} = useHttpClient();
     const {
         register, 
         setValue, 
@@ -32,8 +35,9 @@ const SignUp = () => {
         formState : {errors, isSubmitting},
         reset,
     } = useForm<FormData>({
+        mode : 'all',
         defaultValues : {
-            password : "", 
+            matkhau : "", 
             hoten: "",
             cccd : "", 
             sdt : "",
@@ -43,13 +47,44 @@ const SignUp = () => {
     })
 
     const onSubmit = handleSubmit( async (formData : FormData) => {
+        let data;
+        setOpenLoader(true)
         console.log(formData)
+        try {
+            data = await sendRequest(
+                `${BackEndURL}/candidate/create`, 'POST', {
+                'Content-Type': 'application/json'
+            }, JSON.stringify(formData));
+
+            let userData : UserData = {
+                userId : data.account.username,
+                token : data.accessToken,
+                type : data.account.type,
+                expiredDateToken : null
+            }
+            await auth.login(userData)
+            console.log('success')
+            router.push('/')
+            router.refresh()
+        } catch (err) {
+            console.log(err)
+        }
+        
     })
 
 
 
     return(
     <>
+            <LoadingModal
+                isLoading={isLoading}
+                open={openLoader}
+                onClose={() => { clearError(); setOpenLoader(false) }}
+                messOnDone={"Đăng ký thành công"}
+                messOnLoading="Đang đăng ký"
+                messOnError={error}
+                isError={!!error}
+            />
     <CenterCard>
     <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">Đăng ký thành viên</h1>
     <form onSubmit={onSubmit}>
@@ -67,13 +102,13 @@ const SignUp = () => {
         </div>
         <div className="mb-4">
             <Input
-                type = "password"
+                type = "matkhau"
                 label="Mật khẩu"
-                id = "password"
+                id = "matkhau"
                 errors = {errors}
                 disabled = {isSubmitting}
                 register={{
-                    ...register ("password", {required : true})
+                    ...register ("matkhau", {required : true})
                 }}
             />
         </div>
@@ -126,7 +161,7 @@ const SignUp = () => {
                 }}
             />
         </div>
-        <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Đăng ký Ứng viên</button>
+        <Button className="w-full" >Đăng ký ứng viên</Button>
     </form>
     </CenterCard>
     </>)
