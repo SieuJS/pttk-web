@@ -6,21 +6,19 @@ import { FiMenu } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
 import { MdAdsClick } from "react-icons/md";
 import { Button } from "@/app/(dashboard)/components/ui/button";
-import { useContext, useState } from "react";
-import { useAuthContext } from "@/components/shared/AppProvider";
+import { useContext, useEffect, useState } from "react";
+import AuthHook from "@/shared/hooks/auth-hook";
 import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger,DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuContent } from "@/app/(dashboard)/components/ui/dropdown-menu";
 import { CircleUser } from "lucide-react";
-
+import { useAuthContext } from "./AppProvider";
 const Navbar = () => {
-  const [openMobileMenu, setOpenMobileMenu] =
-    useState(false);
-    const auth = useAuthContext();
-
+  const [openMobileMenu, setOpenMobileMenu] =useState(false);
+    
   const handleOpenMobileMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
   };
+  let auth = useAuthContext();
 
-  console.log(auth)
   return (
     <nav className="py-5 bg-transparent relative top-0 z-10 w-full">
       <div className="max-w-[1450px] w-[90%] mx-auto flex justify-between items-center">

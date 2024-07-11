@@ -22,7 +22,7 @@ import { ModeToggle } from "../ui/mode-toggle";
 
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { useAuthContext } from "./AppProvider";
+import { useAuthContext } from "@/components/shared/AppProvider";
 import { useRouter } from "next/navigation";
 
 function header() {

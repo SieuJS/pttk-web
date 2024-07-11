@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
 const privatePaths = ['/dashboard','/hiring-sheet']
 const authPaths = ['/signin']
 

@@ -30,8 +30,7 @@ const LoginForm = () => {
             password : ""
         }
     });
-    const auth = useAuthContext()
-
+    const auth = useAuthContext();
     const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [data, setData] = useState<AuthResponse>()
     const [open, setOpen] = useState(false)
@@ -51,8 +50,9 @@ const LoginForm = () => {
                 expiredDateToken : null
             }
             await auth.login(userData);
-
-            router.push('/')
+            console.log(userData)
+            console.log('login clicked', auth)
+            router.replace('/')
             router.refresh()
         }catch (error) 
         {
@@ -112,15 +112,16 @@ const LoginForm = () => {
                     </div>
                 </div>
 
-                <div className="text-400 grid grid-cols-2 gap-3 py-3 border-b-2">
+            </form>
+            
+            <div className="text-400 grid grid-cols-2 gap-3 py-3 border-b-2">
                     <h3 className="col-span-2 font-bold">Đăng ký tài khoản</h3>
                     <Button variant={'outline'} ><Link href={'/register'}>Doanh nghiệp</Link></Button>
                     <Button variant={'outline'}><Link href={'/signup'}>Ứng viên</Link></Button>
 
-                    <Button className="col-span-2">Đăng nhập</Button>
+                    <Button onClick={onSubmit} className="col-span-2">Đăng nhập</Button>
 
-                </div>
-            </form>
+            </div>
     </Centercard>
     </>
     )

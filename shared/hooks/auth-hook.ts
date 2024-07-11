@@ -14,9 +14,9 @@ export interface UserData {
 }
 
 export default function AuthHook() {
-    const [token, setToken] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
-    const [type, setType] = useState<string | null>(null);
+    const [token, setToken] = useState<string | null>('');
+    const [userId, setUserId] = useState<string | null>('');
+    const [type, setType] = useState<string | null>('');
     const [deadlineToken, setDeadlineToken] = useState<Date | undefined>();
     const router = useRouter(); 
     const tokenTimeRef = useRef<NodeJS.Timeout | null>(null);
@@ -27,7 +27,7 @@ export default function AuthHook() {
             const userData: UserData = JSON.parse(userDataString);
             login(userData);
         }
-    }, []);
+    }, [token]);
 
     const login = useCallback( async (userData : UserData) => {
 
@@ -43,10 +43,10 @@ export default function AuthHook() {
         setDeadlineToken(deadline);
         
         localStorage.setItem('userData', JSON.stringify(newUserData));
-        await loginAction(userData);
         setToken(userData.token);
         setUserId(userData.userId);
         setType (userData.type)
+        await loginAction(userData);
     }, []);
 
     const logout = useCallback(async () => {

@@ -1,5 +1,5 @@
-"use client" 
-import {useForm} from "react-hook-form"
+"use client"
+import { useForm } from "react-hook-form"
 import LoadingModal from "@/components/modal/LoadingModal"
 import { useRouter } from "next/navigation"
 
@@ -12,13 +12,17 @@ import { BackEndURL } from "@/config"
 import CenterCard from "./ui/CenterCard"
 import Input from "@/components/ui/Input"
 import { Button } from "@/app/(dashboard)/components/ui/button"
+import CheckBox from '@mui/joy/Checkbox'
+import { InputLabel, FormControl, Select, MenuItem } from "@mui/material"
+
 type FormData = {
-    matkhau : string ,
-    cccd : string , 
-    hoten : string ,
-    sdt : string , 
-    email : string , 
-    diachi: string      
+    matkhau: string,
+    cccd: string,
+    hoten: string,
+    sdt: string,
+    email: string,
+    diachi: string,
+    gioitinh: string,
 
 }
 
@@ -26,27 +30,29 @@ const SignUp = () => {
     const auth = AuthHook();
     const router = useRouter();
     const [openLoader, setOpenLoader] = useState(false);
-
-    const {sendRequest,isLoading, error, clearError} = useHttpClient();
+    const [checked, setChecked] = useState('nam');
+    const { sendRequest, isLoading, error, clearError } = useHttpClient();
     const {
-        register, 
-        setValue, 
-        handleSubmit, 
-        formState : {errors, isSubmitting},
+        register,
+        setValue,
+        getValues,
+        handleSubmit,
+        formState: { errors, isSubmitting },
         reset,
     } = useForm<FormData>({
-        mode : 'all',
-        defaultValues : {
-            matkhau : "", 
+        mode: 'all',
+        defaultValues: {
+            matkhau: "",
             hoten: "",
-            cccd : "", 
-            sdt : "",
-            email : "",
-            diachi : ""
+            cccd: "",
+            sdt: "",
+            email: "",
+            diachi: "",
+            gioitinh: 'nam'
         }
     })
 
-    const onSubmit = handleSubmit( async (formData : FormData) => {
+    const onSubmit = handleSubmit(async (formData: FormData) => {
         let data;
         setOpenLoader(true)
         console.log(formData)
@@ -56,26 +62,26 @@ const SignUp = () => {
                 'Content-Type': 'application/json'
             }, JSON.stringify(formData));
 
-            let userData : UserData = {
-                userId : data.account.username,
-                token : data.accessToken,
-                type : data.account.type,
-                expiredDateToken : null
+            let userData: UserData = {
+                userId: data.account.username,
+                token: data.accessToken,
+                type: data.account.type,
+                expiredDateToken: null
             }
             await auth.login(userData)
-            console.log('success')
-            router.push('/')
-            router.refresh()
+            router.replace('/');
+            router.refresh();
         } catch (err) {
             console.log(err)
         }
-        
+
     })
 
 
 
-    return(
-    <>
+
+    return (
+        <>
             <LoadingModal
                 isLoading={isLoading}
                 open={openLoader}
@@ -85,86 +91,103 @@ const SignUp = () => {
                 messOnError={error}
                 isError={!!error}
             />
-    <CenterCard>
-    <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">Đăng ký thành viên</h1>
-    <form onSubmit={onSubmit}>
-        <div className="mb-4">
-            <Input
-                type = "email"
-                label="Email"
-                id = "email"
-                errors = {errors}
-                disabled = {isSubmitting}
-                register={{
-                    ...register ("email", {required : true})
-                }}
-            />
-        </div>
-        <div className="mb-4">
-            <Input
-                type = "matkhau"
-                label="Mật khẩu"
-                id = "matkhau"
-                errors = {errors}
-                disabled = {isSubmitting}
-                register={{
-                    ...register ("matkhau", {required : true})
-                }}
-            />
-        </div>
-        <div className="mb-4">
-            <Input
-                type = "text"
-                label="Tên ứng viên"
-                id = "hoten"
-                errors = {errors}
-                disabled = {isSubmitting}
-                register={{
-                    ...register ("hoten", {required : true})
-                }}
-            />
-        </div>
-        <div className="mb-4">
-            <Input
-                type = "text"
-                label="CCCD"
-                id = "cccd"
-                errors = {errors}
-                disabled = {isSubmitting}
-                register={{
-                    ...register ("cccd", {required : true})
-                }}
-            />
-        </div>
+            <CenterCard>
+                <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">Đăng ký thành viên</h1>
+                <form onSubmit={onSubmit} className="grid grid-cols-2 gap-6">
 
-        <div className="mb-4">
-            <Input
-                type = "text"
-                label="Địa chỉ"
-                id = "diachi"
-                errors = {errors}
-                disabled = {isSubmitting}
-                register={{
-                    ...register ("diachi", {required : true})
-                }}
-            />
-        </div>
-        <div className="mb-4">
-            <Input
-                type = "text"
-                label="Số điện thoại"
-                id = "sdt"
-                errors = {errors}
-                disabled = {isSubmitting}
-                register={{
-                    ...register ("sdt", {required : true })
-                }}
-            />
-        </div>
-        <Button className="w-full" >Đăng ký ứng viên</Button>
-    </form>
-    </CenterCard>
-    </>)
+                    <div className="mb-4">
+                        <Input
+                            type="email"
+                            label="Email"
+                            id="email"
+                            errors={errors}
+                            disabled={isSubmitting}
+                            register={{
+                                ...register("email", { required: true })
+                            }}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <Input
+                            type="password"
+                            label="Mật khẩu"
+                            id="matkhau"
+                            errors={errors}
+                            disabled={isSubmitting}
+                            register={{
+                                ...register("matkhau", { required: true })
+                            }}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <Input
+                            type="text"
+                            label="Tên ứng viên"
+                            id="hoten"
+                            errors={errors}
+                            disabled={isSubmitting}
+                            register={{
+                                ...register("hoten", { required: true })
+                            }}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <Input
+                            type="text"
+                            label="CCCD"
+                            id="cccd"
+                            errors={errors}
+                            disabled={isSubmitting}
+                            register={{
+                                ...register("cccd", { required: true })
+                            }}
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <Input
+                            type="text"
+                            label="Địa chỉ"
+                            id="diachi"
+                            errors={errors}
+                            disabled={isSubmitting}
+                            register={{
+                                ...register("diachi", { required: true })
+                            }}
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <Input
+                            type="text"
+                            label="Số điện thoại"
+                            id="sdt"
+                            errors={errors}
+                            disabled={isSubmitting}
+                            register={{
+                                ...register("sdt", { required: true })
+                            }}
+                        />
+                    </div>
+                    <div  >
+                        <FormControl fullWidth >
+                            <InputLabel>Giới tính</InputLabel>
+                            <Select id="gioitinh" {...register('gioitinh', {
+                                onChange: (e) => {
+                                    setValue('gioitinh', e.target.value)
+                                }
+                            })}
+                                label="Giới tính"
+                            >
+                                <MenuItem value="Nam">Nam</MenuItem>
+                                <MenuItem value="Nữ">Nữ</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    <Button className="w-full col-span-2" >Đăng ký ứng viên</Button>
+                </form>
+            </CenterCard>
+        </>)
 }
 
 export default SignUp

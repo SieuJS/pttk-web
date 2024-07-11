@@ -11,35 +11,90 @@ import { Button } from '@/app/(dashboard)/components/ui/button'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import AuthHook from '@/shared/hooks/auth-hook'
-import { CircularProgress, Modal } from '@mui/material'
+import { useAuthContext } from '../shared/AppProvider'
+import { CircularProgress } from '@mui/material'
+import { useEdgeStore } from "@/lib/edgestore";
+import Input from '@/app/(dashboard)/components/ui/input'
+
 interface DetailProps {
     maphieudangtuyen: string;
 }
 
 function HiringDetail({ maphieudangtuyen }: DetailProps) {
     const router = useRouter();
-    const auth = AuthHook();
-    const [modal, setModal] = useState(false)
+    const auth = useAuthContext() ;
+    console.log(auth);
+    const [file, setFile] = useState<File> () ;
+    const {edgestore} = useEdgeStore() ;
     const [data, setData] = useState<FormData>() ;
     const {sendRequest, isLoading, error, clearError} = useHttpClient() ;
+    const [isApplied, setIsApplied] = useState(false);
+    const [linkImg, setLinkImg] = useState<string>()
+    const [uploadingImg, setIsUploadingImg] = useState(false)
+    const uploadImageHandler = async () => {
+        setIsUploadingImg(true);
+        if (file) {
+          const res = await edgestore.publicFiles.upload({
+            file,
+          });
+          console.log(res.url)
+          setLinkImg(res.url)
+        }
+        setIsUploadingImg(false)
+      };
     
+      useEffect(() => {
+        if (file) {
+          uploadImageHandler();
+        }
+      }, [file]);
+
     const doApply = async () => {
+        console.log(linkImg)
         try {
-            setModal(true)
             let response = await sendRequest(
                 BackEndURL+'/candidate/apply/'+maphieudangtuyen,
                 'POST',
                 {
                     'Authorization' : `Bearer ${auth.token}` 
-                }
+                },
+                JSON.stringify({"cv" : linkImg})
             )
-            setModal(false)
+            setIsApplied(true)
         }
         catch (err) {
             console.log(err) ; 
         }
     }
 
+    useEffect(()=> {
+        if (!auth.token) return ;
+        const fetchData = async () => {
+            try {
+            let response = await sendRequest(
+                BackEndURL+'/candidate/check-apply/'+maphieudangtuyen,
+                'GET',
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization' : `Bearer ${auth.token}` 
+                }
+
+            )
+            if(response.isApplied) {
+                setIsApplied(true)
+            }else{
+                setIsApplied(false)
+            }
+            }
+            catch (err) {
+                console.log(err)
+
+            }
+        }
+        fetchData();
+    },[auth.token])
+
+    console.log(!auth.token, !file, !!isApplied )
 
     useEffect(() => {
         const fetchData = async() => {
@@ -59,16 +114,6 @@ function HiringDetail({ maphieudangtuyen }: DetailProps) {
 
   return (
     <>
-    <Modal
-    open = {modal}
-    onClose={() => {setModal(false); clearError()}}   
-    className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[600px] flex justify-center'
-    >
-        <>
-        {error && (<div>{error}</div>)}
-        {isLoading && <CircularProgress/>}
-        </>
-    </Modal>
                 <CardHeader>
                 <h2 className='font-medium'>Job require</h2>
                 <div className="border"></div>
@@ -110,10 +155,21 @@ function HiringDetail({ maphieudangtuyen }: DetailProps) {
                 <div className='font-medium ml-4 mb-2'>
                     {data?.mota}
                 </div>
-                <div className="border mt-2 mb-2"></div>
+                <div className="border mt-2"></div>
             </CardContent> 
-            <div className="mt-4 ml-4">
-              <Button disabled = {!auth.token} onClick={doApply}>Apply Now</Button>
+            <div className="ml-4">
+            <Input
+              label="Chọn hình CV của bạn"
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files?.[0]);
+              }}
+              id="file"
+            />
+              <Button disabled = {(!auth.token || !file || !!isApplied  || !linkImg)} onClick={doApply} className='mt-4'>
+                 {isLoading || uploadingImg ? <CircularProgress/> : isApplied ? "Đã ứng tuyển" : "Ứng tuyển"}  
+                </Button>
+                {error && <div className='text-red-400'>{error}</div>}
             </div>          
         </>
   )
