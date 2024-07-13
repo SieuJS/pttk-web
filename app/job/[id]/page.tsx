@@ -10,7 +10,7 @@ interface DynamicProps {
 
 const getData = async (id: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_API}/post/${id}`,
+    `/api/post/${id}`,
     {
       cache: "no-store",
     }
