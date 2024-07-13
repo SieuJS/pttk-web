@@ -10,7 +10,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import LoadingModal from "./modal/LoadingModal";
+import LoadingModal from "@/components/modal/LoadingModal";
 import { BackEndURL } from "@/config";
 import { useAuthContext } from "@/components/shared/AppProvider";
 export interface InforSheetProps {

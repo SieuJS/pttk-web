@@ -20,11 +20,11 @@ import { inforList } from "../constants/dashboard";
 import InforSheet from "../components/InforSheet";
 
 
-let cookieStore = cookies () ; 
-const sessionToken = cookieStore.get('clientToken')  ;
+
 
 const DashBoard = () => {
-
+  let cookieStore = cookies () ; 
+  const sessionToken = cookieStore.get('clientToken')  ;
   return (
       <>
   <Card>
