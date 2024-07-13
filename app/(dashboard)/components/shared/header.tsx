@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "../ui/mode-toggle";
-
+import { CompanyLinks, CandidateLinks} from "./sidebar";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useAuthContext } from "@/components/shared/AppProvider";
@@ -34,6 +34,20 @@ function header() {
         router.push('/');
         router.refresh();
     }
+
+    let sideBarLinks = auth.isLoggedIn ? (
+        <>
+            {auth.type.toLowerCase() === 'doanh nghiệp' && CompanyLinks}
+            {auth.type.toLowerCase() === 'ứng viên' && CandidateLinks}
+            
+        </>
+    ) : (
+        <Link href="/signin"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+            <Home className="h-4 w-4" />
+            Đăng nhập
+        </Link>
+    )
 
     return (
 
@@ -51,19 +65,7 @@ function header() {
                             <Package2 className="h-6 w-6" />
                             <span className="sr-only">Acme Inc</span>
                         </Link>
-                        <Link href="#"
-                            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground">
-                            <Home className="h-5 w-5" />
-                            Thông tin cá nhân
-                        </Link>
-                        <Link href="/"
-                            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground">
-                            <ShoppingCart className="h-5 w-5" />
-                            Phiếu đăng ký
-                            <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                                6
-                            </Badge>
-                        </Link>
+                        {sideBarLinks}
 
                     </nav>
 

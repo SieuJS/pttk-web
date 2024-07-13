@@ -56,9 +56,10 @@ function HiringDetail({ maphieudangtuyen }: DetailProps) {
                 BackEndURL+'/candidate/apply/'+maphieudangtuyen,
                 'POST',
                 {
-                    'Authorization' : `Bearer ${auth.token}` 
+                    'Authorization' : `Bearer ${auth.token}` ,
+                    'Content-Type': 'application/json'
                 },
-                JSON.stringify({"cv" : linkImg})
+                JSON.stringify({cv : linkImg})
             )
             setIsApplied(true)
         }

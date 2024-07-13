@@ -1,13 +1,14 @@
 'use client'
 import {useForm} from 'react-hook-form';
 import { useParams } from 'next/navigation'
-import Input from '@/app/(dashboard)/components/ui/input';
+import Input from '@/components/ui/Input';
+
 import { useState, useEffect } from 'react';
 
 import { BackEndURL } from '@/config';
 
-import { ApplySheet, columns } from '@/app/(dashboard)/dashboard/(apply-sheet)/schema/apply-sheet';
-import { useAuthContext } from '@/components/shared/AppProvider';
+import { ApplySheet, columns } from '../../schema/apply-sheet';
+
 import { DataTable } from '@/components/shared/DataTable';
 
 import { Pagination } from '@mui/material';
@@ -18,7 +19,6 @@ export default function ApplySearch() {
     const [currentPage, setCurrentPage] = useState(1);
     const limit = 5;
     const params = useParams() ; 
-    const auth= useAuthContext() ; 
     const {
       register,
       setValue,
@@ -28,16 +28,14 @@ export default function ApplySearch() {
     } = useForm<ApplySheet>({
       mode: 'all',
       defaultValues: {
-        maphieuungtuyen : "",
+        maphieuungtuyen : `${params.matin}`,
         maungvien : "",
       },
     });
- 
   
     const fetchData = async (page?:number) => {
       const searchData = getValues();
-      if (!auth.userId) return ; 
-      setValue('maungvien',auth.userId)
+      console.log('searhc apply')
       try {
         const response = await fetch(BackEndURL+`/apply-sheet/search?limit=${limit}&page=${page || currentPage}`, {
           method: 'POST',
@@ -65,7 +63,7 @@ export default function ApplySearch() {
     // Fetch data on initial render, page change, or search criteria change
     useEffect(() => {
       fetchData();
-    }, [currentPage, params.matin ,auth.userId]);
+    }, [currentPage, params.matin]);
   
     async function onSearch (event? : any){
   
@@ -83,7 +81,7 @@ export default function ApplySearch() {
   
     return (
       <>
-        <form className="grid grid-cols-3 gap-4 my-4 mx-4" onSubmit={handleSubmit(onSearch)}>        
+        <form className="grid grid-cols-3 gap-4" onSubmit={handleSubmit(onSearch)}>        
 
           <Input
             label='Mã số thuế'
@@ -98,7 +96,7 @@ export default function ApplySearch() {
           />
           </form>
         {/* Display Search Results */}
-      <DataTable  columns={columns} data={searchResults} />
+      <DataTable columns={columns} data={searchResults} />
       <Pagination
           count={Math.ceil(totalCount / limit)} // Assuming 10 items per page
           page={currentPage} 

@@ -12,14 +12,14 @@ import {
 import { useEffect, useState } from "react";
 import LoadingModal from "./modal/LoadingModal";
 import { BackEndURL } from "@/config";
-import AuthHook from "@/shared/hooks/auth-hook";
+import { useAuthContext } from "@/components/shared/AppProvider";
 export interface InforSheetProps {
     token: string | undefined,
     context? : string ,
     email ? : string ,
 }
 export default function InforSheet ( {token} : InforSheetProps) { 
-    const auth = AuthHook();
+    const auth = useAuthContext() ; 
     const {sendRequest, isLoading, clearError, error} = useHttpClient()
     const [info, setInfor] = useState<any>(); 
     const [openLoading, setOpenLoading] = useState(false);
@@ -36,7 +36,7 @@ export default function InforSheet ( {token} : InforSheetProps) {
             data = await sendRequest(
                 BackEndURL + '/company/infor',
                 'GET' , {
-                    'Authorization' : `Bearer ${token}` 
+                    'Authorization' : `Bearer ${auth.token}` 
                 }
             )
             }
@@ -79,7 +79,8 @@ export default function InforSheet ( {token} : InforSheetProps) {
                 <div className="font-medium">{(info as any)[i.value]}</div>
               </TableCell>
             </TableRow>
-          ))}
+          ))
+          }
         {
         info && auth.type?.toLowerCase() ==='ứng viên' &&
         candidateInforList.map(i => (

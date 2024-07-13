@@ -50,8 +50,6 @@ const LoginForm = () => {
                 expiredDateToken : null
             }
             await auth.login(userData);
-            console.log(userData)
-            console.log('login clicked', auth)
             router.replace('/')
             router.refresh()
         }catch (error) 

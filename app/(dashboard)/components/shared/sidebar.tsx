@@ -11,25 +11,45 @@ import {
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { AuthContext } from "@/shared/context/auth-context";
-import { useContext } from "react";
+import { useAuthContext } from "@/components/shared/AppProvider";
+export const CompanyLinks = (
+    <>
+        <Link href="/dashboard"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+            <Home className="h-4 w-4" />
+            Thông tin chung
+        </Link>
+        <Link href="/hiring-sheet"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+            <Home className="h-4 w-4" />
+            Phiếu đăng tuyển
+        </Link>
+    </>
+) 
+
+export const CandidateLinks = (
+    <>
+    <Link href="/dashboard"
+        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+        <Home className="h-4 w-4" />
+        Thông tin chung
+    </Link>
+    <Link href="/dashboard/apply-sheet/infor"
+        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+        <Home className="h-4 w-4" />
+        Phiếu ứng tuyển
+    </Link>
+</>
+
+)
 
 function sidebar() {
-    const auth = useContext(AuthContext);
+    const auth = useAuthContext();
     let sideBarLinks = auth.isLoggedIn ? (
         <>
-            <Link href="/dashboard"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                <Home className="h-4 w-4" />
-                Thông tin cá nhân
-            </Link>
-            <Link href="/regis-sheet"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                <ShoppingCart className="h-4 w-4" />
-                Phiếu đăng ký thành viên
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                </Badge>
-            </Link>
+            {auth.type.toLowerCase() === 'doanh nghiệp' && CompanyLinks}
+            {auth.type.toLowerCase() === 'ứng viên' && CandidateLinks}
+            
         </>
     ) : (
         <Link href="/signin"

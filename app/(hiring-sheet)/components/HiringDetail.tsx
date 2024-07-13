@@ -151,8 +151,18 @@ function HiringDetail({ maphieudangtuyen }: DetailProps) {
                 <div className="border mt-2 mb-2"></div>
             </CardContent>
             <div className="mx-6 my-6 flex flex-row gap-6">
-                        <Button className='w-100 basis-1/2' variant={'destructive'} onClick={()=>{router.back()}}>
+                        <Button className='w-100 basis-1/2' variant={'destructive'} onClick={()=>{router.replace('/hiring-sheet')}}>
                             Quay lại
+                        </Button>
+                       
+                            <Link href={'/payment/' + maphieudangtuyen}>
+                            <Button className='w-100 basis-1/2' variant={'default'} >Thông tin thanh toán
+                            </Button>
+                            </Link>  
+                        <Button className='w-100 basis-1/2' variant={'default'}>
+                            <Link href={'/dashboard/apply-sheet/infor/'+maphieudangtuyen}>
+                            Danh sách ứng viên
+                            </Link>
                         </Button>
             </div>               
         </>
