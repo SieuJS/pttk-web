@@ -67,16 +67,15 @@ model nhanvien {
 }
 
 model phieudangkythanhvien {
-  maphieudangky    String           @id @db.VarChar(10)
-  ngaydangky       DateTime?        @db.Date
-  ngayxetduyet     DateTime?        @db.Date
-  masothue         String?          @db.VarChar(10)
-  tencongty        String?          @db.VarChar(255)
-  nguoidaidien     String?          @db.VarChar(255)
-  diachi           String?          @db.VarChar(255)
-  email            String?          @db.VarChar(255)
-  nhanvientiepnhan String?          @db.VarChar(10)
-  phieudk_tuchoi   phieudk_tuchoi[]
+  maphieudangky    String    @id @db.VarChar(10)
+  ngaydangky       DateTime? @db.Date
+  ngayxetduyet     DateTime? @db.Date
+  masothue         String?   @db.VarChar(10)
+  tencongty        String?   @db.VarChar(255)
+  nguoidaidien     String?   @db.VarChar(255)
+  diachi           String?   @db.VarChar(255)
+  email            String?   @db.VarChar(255)
+  nhanvientiepnhan String?   @db.VarChar(10)
 }
 
 model phieudangkyungtuyen {
@@ -167,10 +166,10 @@ model dichvu {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model phieudk_tuchoi {
-  maphieu              String               @db.VarChar
-  ngaytuchoi           DateTime             @db.Date
-  ngaychinhsua         DateTime?            @db.Date
-  phieudangkythanhvien phieudangkythanhvien @relation(fields: [maphieu], references: [maphieudangky], onDelete: NoAction, onUpdate: NoAction)
+  maphieu      String
+  ngaytuchoi   DateTime  @db.Date
+  lydo         String?
+  ngaychinhsua DateTime? @db.Timestamptz(6)
 
   @@id([maphieu, ngaytuchoi])
 }
