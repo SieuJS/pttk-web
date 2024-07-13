@@ -8,9 +8,10 @@ const nextConfig = {
                 hostname : "files.edgestore.dev"
             }
         ]
-    }
-
-
+    },
+    experimental: {
+        missingSuspenseWithCSRBailout: false,
+      },
 };
 
 export default nextConfig;
