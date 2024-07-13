@@ -70,8 +70,8 @@ export default function InforSheet ( {token} : InforSheetProps) {
         /> }
         {
         info && auth.type?.toLowerCase() ==='doanh nghiệp' &&
-        inforList.map(i => (
-            <TableRow>
+        inforList.map((i) => (
+            <TableRow key = {i.value} >
               <TableCell>
                 <div className="font-medium">{i.label}</div>
               </TableCell>
@@ -84,7 +84,7 @@ export default function InforSheet ( {token} : InforSheetProps) {
         {
         info && auth.type?.toLowerCase() ==='ứng viên' &&
         candidateInforList.map(i => (
-            <TableRow>
+            <TableRow key = {i.value}>
               <TableCell>
                 <div className="font-medium">{i.label}</div>
               </TableCell>

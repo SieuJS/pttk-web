@@ -43,7 +43,7 @@ export const CandidateLinks = (
 
 )
 
-function sidebar() {
+function Sidebar() {
     const auth = useAuthContext();
     let sideBarLinks = auth.isLoggedIn ? (
         <>
@@ -84,4 +84,4 @@ function sidebar() {
     )
 }
 
-export default sidebar
+export default Sidebar

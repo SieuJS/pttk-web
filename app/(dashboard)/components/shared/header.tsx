@@ -25,7 +25,7 @@ import { Button } from "../ui/button";
 import { useAuthContext } from "@/components/shared/AppProvider";
 import { useRouter } from "next/navigation";
 
-function header() {
+function Header() {
     
     const auth = useAuthContext();
     const router = useRouter();
@@ -80,4 +80,4 @@ function header() {
     )
 }
 
-export default header
+export default Header

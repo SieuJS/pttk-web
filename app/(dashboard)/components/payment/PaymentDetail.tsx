@@ -101,9 +101,9 @@ function PaymentDetail({ hoadon }: DetailProps) {
             </TableHead>
             <TableBody className="border-x">
               {
-                bills?.map(b => {
+                bills?.map( (b,i) => {
                   return (
-                    <TableRow>
+                    <TableRow key = {i}>
                       <TableCell>{b.mahoadon}</TableCell> 
                       <TableCell>{b.lanthanhtoan}</TableCell>
                       <TableCell>{b.ngaythanhtoan}</TableCell>
