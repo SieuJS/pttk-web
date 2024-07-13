@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-const privatePaths = ['/dashboard','/hiring-sheet']
+const privatePaths = ['/dashboard','/hiring-sheet' , '/job']
 const authPaths = ['/signin']
 
 const productEditRegex = /^\/products\/\d+\/edit$/
@@ -23,5 +23,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/dashboard/:path*', '/signin', '/hiring-sheet/:path*']
+  matcher: ['/dashboard/:path*', '/signin', '/hiring-sheet/:path*', '/job/:path*']
 }
