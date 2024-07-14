@@ -1,7 +1,7 @@
 import HiringDetail from "@/components/job/HiringDetail";
 import Button from "@/components/ui/Button";
+import { ServerURL } from "@/config";
 import { formatPostedDate } from "@/utils/formatDate";
-
 interface DynamicProps {
   params: {
     id: string;
@@ -10,18 +10,18 @@ interface DynamicProps {
 
 const getData = async (id: string) => {
   const res = await fetch(
-    `/api/post/${id}`,
+    `${ServerURL}/post/${id}`,
     {
       cache: "no-store",
     }
   );
 
   if (!res.ok) {
-    throw new Error("Failed");
+    console.log( new Error("Failed"));
   }
   return res.json();
 };
-const page = async ({ params }: DynamicProps) => {
+const Page = async ({ params }: DynamicProps) => {
   const { id } = params;
   const job = await getData(id);
   const formattedPostedDate = formatPostedDate(
@@ -105,4 +105,4 @@ const page = async ({ params }: DynamicProps) => {
   );
 };
 
-export default page;
+export default Page;
