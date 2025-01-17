@@ -106,7 +106,7 @@ function PaymentDetail({ hoadon }: DetailProps) {
                     <TableRow key = {i}>
                       <TableCell>{b.mahoadon}</TableCell> 
                       <TableCell>{b.lanthanhtoan}</TableCell>
-                      <TableCell>{b.ngaythanhtoan}</TableCell>
+                      <TableCell>{(new Date(b.ngaythanhtoan).toLocaleString())}</TableCell>
                       <TableCell>{b.sotienthanhtoan}</TableCell>
                   </TableRow>
                   )

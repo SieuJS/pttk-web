@@ -18,6 +18,7 @@ import {
 
 import { inforList } from "../constants/dashboard";
 import InforSheet from "../components/InforSheet";
+import { Button } from "../components/ui/button";
 
 
 
@@ -33,7 +34,7 @@ const DashBoard = () => {
       </CardHeader>
   </Card>
   <CardContent>
-      <Table>
+      <Table className="mb-4">
       <TableBody>
         <InforSheet token= {sessionToken?.value} />
 

@@ -43,6 +43,7 @@ export default function ApplySearch() {
           },
           body: JSON.stringify({ 
             ...searchData, 
+            trangthai :'đã duyệt',
             page: page || currentPage, // Pass current page to API
           }),
         });
