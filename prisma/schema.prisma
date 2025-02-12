@@ -70,7 +70,7 @@ model phieudangkythanhvien {
   maphieudangky    String    @id @db.VarChar(10)
   ngaydangky       DateTime? @db.Date
   ngayxetduyet     DateTime? @db.Date
-  masothue         String?   @db.VarChar(10)
+  masothue         String?   @unique
   tencongty        String?   @db.VarChar(255)
   nguoidaidien     String?   @db.VarChar(255)
   diachi           String?   @db.VarChar(255)
