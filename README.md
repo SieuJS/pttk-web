@@ -21,7 +21,7 @@ Have fun
 ### Company 
 
 1. Company info
-![alt text](demo/detail-job.png.png)
+![alt text](demo/detail-job.png)
 
 2. List of joblisting
 ![alt text](demo/list-joblisting.png)
